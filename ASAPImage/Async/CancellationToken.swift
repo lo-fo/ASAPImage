@@ -8,14 +8,14 @@
 
 import Foundation
 
-class CancellationToken {
+public class CancellationToken {
     private weak var task: URLSessionDataTask?
 
     init(with task: URLSessionDataTask) {
         self.task = task
     }
 
-    func cancel() {
+    public func cancel() {
         task?.cancel()
     }
 }

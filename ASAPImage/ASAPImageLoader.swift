@@ -8,13 +8,13 @@
 
 import UIKit
 
-enum ASAPError: Error {
+public enum ASAPError: Error {
     case cantBuildImageFromData
 }
 
-class ASAPImageLoader: NSObject {
+public class ASAPImageLoader: NSObject {
 
-    static let shared = ASAPImageLoader()
+    public static let shared = ASAPImageLoader()
 
     private var taskAttributes: [Int:(data: Data, callback: (Result<UIImage>) -> Void)] = [:]
     private var urlSession: URLSession? = nil
@@ -25,7 +25,7 @@ class ASAPImageLoader: NSObject {
     }
 
     @discardableResult
-    func load(imageAt url: URL, completion: @escaping (Result<UIImage>) -> Void) -> CancellationToken {
+    public func load(imageAt url: URL, completion: @escaping (Result<UIImage>) -> Void) -> CancellationToken {
         let task = urlSession!.dataTask(with: url)
         taskAttributes[task.taskIdentifier] = (Data(), completion)
         task.resume()
@@ -34,7 +34,7 @@ class ASAPImageLoader: NSObject {
 }
 
 extension ASAPImageLoader: URLSessionTaskDelegate {
-    func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
+    public func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
         if let error = error {
             taskAttributes[task.taskIdentifier]?.callback(.failure(error))
         } else if let data = taskAttributes[task.taskIdentifier]?.data, let image = UIImage(data: data) {
@@ -47,7 +47,7 @@ extension ASAPImageLoader: URLSessionTaskDelegate {
 }
 
 extension ASAPImageLoader: URLSessionDataDelegate {
-    func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive response: URLResponse, completionHandler: @escaping (URLSession.ResponseDisposition) -> Void) {
+    public func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive response: URLResponse, completionHandler: @escaping (URLSession.ResponseDisposition) -> Void) {
         guard let response = response as? HTTPURLResponse
             , 200 == response.statusCode
             , let mimeType = response.mimeType
@@ -58,7 +58,7 @@ extension ASAPImageLoader: URLSessionDataDelegate {
         completionHandler(.allow)
     }
 
-    func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
+    public func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
         taskAttributes[dataTask.taskIdentifier]?.data.append(data)
     }
 }

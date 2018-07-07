@@ -8,18 +8,18 @@
 
 import UIKit
 
-class ASAPImageView: UIImageView {
+public class ASAPImageView: UIImageView {
 
     private var token: CancellationToken?
 
-    override var image: UIImage? {
+    override public var image: UIImage? {
         willSet {
             token?.cancel()
             token = nil
         }
     }
 
-    func load(imageAt url: URL, completion: ((Result<Void>) -> Void)? = nil) {
+    public func load(imageAt url: URL, completion: ((Result<Void>) -> Void)? = nil) {
         token?.cancel()
         token = ASAPImageLoader.shared.load(imageAt: url) { [weak self] result in
             self?.token = nil
@@ -35,7 +35,7 @@ class ASAPImageView: UIImageView {
         }
     }
 
-    func cancel() {
+    public func cancel() {
         token?.cancel()
         token = nil
     }
