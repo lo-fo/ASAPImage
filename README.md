@@ -11,6 +11,8 @@ It handles fetching an image from an URL then asynchronously setting it as its `
 ### Basic usage
 
 ```swift
+import ASAPImage
+
 let url: URL!
 
 let asapImageView = ASAPImageView()
@@ -69,4 +71,18 @@ If you want to cancel a request you can use the `CancellationToken` returned by 
 ```swift
 let token = ASAPImageLoader.shared.load(imageAt: url) { /* your logic */ }
 token.cancel()
+```
+
+## Installation with Cocoapods
+
+[CocoaPods](http://cocoapods.org/) is a dependency manager for Objective-C, which automates and simplifies the process of using 3rd-party libraries in your projects. See the [Get Started](http://cocoapods.org/#get_started) section for more details.
+
+#### Podfile
+```
+pod 'ASAPImage'
+```
+
+If you are using Swift, be sure to add `use_frameworks!`
+```
+use_frameworks!
 ```
