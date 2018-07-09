@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'ASAPImage'
-  s.version          = '0.1.1'
+  s.version          = '0.1.2'
   s.summary          = 'Asynchronous image downloading utilities'
  
   s.description      = <<-DESC
