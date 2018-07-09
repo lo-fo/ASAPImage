@@ -14,16 +14,31 @@ public enum ASAPError: Error {
 
 public class ASAPImageLoader: NSObject {
 
+    /**
+     Access the singleton through the shared class property.
+     */
     public static let shared = ASAPImageLoader()
 
     private var taskAttributes: [Int:(data: Data, callback: (Result<UIImage>) -> Void)] = [:]
     private var urlSession: URLSession? = nil
 
+    /**
+        Since ASAPImageLoader is meant to be used only through its shared singleton,
+        We set as private its init method.
+     */
     private override init() {
         super.init()
         self.urlSession = URLSession(configuration: .default, delegate: self, delegateQueue: nil)
     }
 
+    /**
+     Downloads an image over network and returns it (or an error) through a callback.
+
+     - parameters:
+        - url: the image url
+        - completion: a callback called upon resolution of the download.
+     - returns: a cancellation token
+    */
     @discardableResult
     public func load(imageAt url: URL, completion: @escaping (Result<UIImage>) -> Void) -> CancellationToken {
         let task = urlSession!.dataTask(with: url)

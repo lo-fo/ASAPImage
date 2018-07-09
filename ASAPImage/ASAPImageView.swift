@@ -19,6 +19,13 @@ public class ASAPImageView: UIImageView {
         }
     }
 
+    /**
+     Downloads an image over network and sets it as UIImageView's image property.
+
+     - parameters:
+        - url: the image url
+        - completion: an optional callback called upon resolution of the download.
+     */
     public func load(imageAt url: URL, completion: ((Result<Void>) -> Void)? = nil) {
         token?.cancel()
         token = ASAPImageLoader.shared.load(imageAt: url) { [weak self] result in
@@ -35,6 +42,9 @@ public class ASAPImageView: UIImageView {
         }
     }
 
+    /**
+     Cancels the ongoing download request.
+     */
     public func cancel() {
         token?.cancel()
         token = nil

@@ -9,6 +9,14 @@
 import Foundation
 
 extension String {
+    /**
+     A potentially case insensitive implementation of String.hasPrefix()
+
+     - parameters:
+        - prefix: the String searched as a prefix
+        - caseSensitive: a Bool stating wether case should be taken into account or not
+     - returns: true or false
+     */
     func hasPrefix(_ prefix: String, caseSensitive: Bool) -> Bool {
         if (caseSensitive) {
             return self.hasPrefix(prefix)
